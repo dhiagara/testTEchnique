@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnDestroy } from '@angular/core';
 import { User } from '../entity/User';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ApiUsersService } from '../services/api-users.service';
-
+import { SubSink } from 'subsink';
 @Component({
   selector: 'app-config-side-bar',
   templateUrl: './config-side-bar.component.html',
   styleUrls: ['./config-side-bar.component.css']
 })
-export class ConfigSideBarComponent implements OnInit {
+export class ConfigSideBarComponent implements OnInit, OnDestroy {
+  private subs = new SubSink();
   @Input() user: User;
   userForm = this.fb.group({
     id: [''],
@@ -18,6 +19,7 @@ export class ConfigSideBarComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private userService: ApiUsersService) { }
+
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes)
   }
@@ -28,7 +30,7 @@ export class ConfigSideBarComponent implements OnInit {
   onSubmit() {
 
     const id = this.userForm.value.id;
-    this.userService.updatUser(this.userForm.value, id).subscribe(r => {
+    this.subs.sink = this.userService.updatUser(this.userForm.value, id).subscribe(r => {
       console.log("succes ???")
     })
 
@@ -40,9 +42,8 @@ export class ConfigSideBarComponent implements OnInit {
     });
   }
 
-  // toggl() {
-  //   var element = document.getElementById("sidebar");
-  //   element.classList.toggle("active");
-  // }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
 }

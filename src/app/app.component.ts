@@ -1,6 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SubSink } from 'subsink';
 import { User } from './entity/User';
 import { ApiUsersService } from './services/api-users.service';
 
@@ -23,7 +24,9 @@ import { ApiUsersService } from './services/api-users.service';
     )
   ],
 })
-export class AppComponent implements OnInit {
+
+export class AppComponent implements OnInit, OnDestroy {
+  private subs = new SubSink();
   title = 'test-technique';
   listUsers: User[] = [];
   selectedUser: User;
@@ -39,9 +42,9 @@ export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder, private userService: ApiUsersService) {
 
   }
+
   ngOnInit(): void {
     this.LoadListUsersFromJson();
-
   }
   userSelect(user) {
     console.log("selected user ", this.selectedUser, "user", user)
@@ -59,22 +62,18 @@ export class AppComponent implements OnInit {
       }
     }
   }
-
   onSubmit() {
     this.SaveListUsersInJson();
-
   }
   fetchData() {
     this.LoadListUsersFromJson();
   }
 
-
-
   /*
   * @ToDo
   * */
   LoadListUsersFromJson() {
-    this.userService.getUsers().subscribe(data => {
+    this.subs.sink = this.userService.getUsers().subscribe(data => {
       this.listUsers = this.getRandomUserImage(data);
     })
   }
@@ -88,7 +87,6 @@ export class AppComponent implements OnInit {
 
     return mapedData
   }
-
   /*
   * @ToDo
   * */
@@ -96,9 +94,13 @@ export class AppComponent implements OnInit {
     const length = this.listUsers.length - 1
     const id = this.listUsers[length].id + 1;
     const newUser = { ...this.userForm.value, id }
-    this.userService.addUser(newUser).subscribe(r => {
-      console.log("succes ???")
+    this.subs.sink = this.userService.addUser(newUser).subscribe(r => {
+
     })
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
 }

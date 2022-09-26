@@ -1,15 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { User } from '../entity/User';
 import { ApiUsersService } from '../services/api-users.service';
-
+import { SubSink } from 'subsink';
 @Component({
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
-  styleUrls: ['./user-card.component.css']
+  styleUrls: ['./user-card.component.css'],
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent implements OnInit, OnDestroy {
+  private subs = new SubSink();
   @Input() user: User;
   @Output() clickUser = new EventEmitter();
   userForm = this.fb.group({
@@ -18,32 +26,31 @@ export class UserCardComponent implements OnInit {
     _prenom: ['', Validators.required],
     _nombre_enfants: ['', Validators.required],
   });
-  constructor(private userService: ApiUsersService, private fb: FormBuilder,) { }
+  constructor(private userService: ApiUsersService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.loadUser();
   }
-  userSelect() {
-
-  }
+  userSelect() { }
   deleteUser() {
-    this.userService.deleteUser(this.user.id).subscribe(res => {
-      console.log("user deleted");
-    })
+    this.subs.sink = this.userService
+      .deleteUser(this.user.id)
+      .subscribe((res) => {
+        console.log('user deleted');
+      });
   }
   onSubmit() {
-
     const id = this.userForm.value.id;
-    this.userService.updatUser(this.userForm.value, id).subscribe(r => {
-
-    })
-
+    this.subs.sink = this.userService
+      .updatUser(this.userForm.value, id)
+      .subscribe((r) => { });
   }
   loadUser() {
-    console.log("user", this.user)
     this.userForm.patchValue({
-      ...this.user
+      ...this.user,
     });
   }
-
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 }
