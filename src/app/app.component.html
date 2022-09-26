@@ -1,10 +1,10 @@
 <div [ngClass]="style1 == true ? 'row users' : 'row users2'">
-  <div class="col-2" *ngIf="isShown" [@enterAnimation]>
+  <div class="col-md-3 cardsMedia" *ngIf="isShown" [@enterAnimation]>
     <div>
       <app-config-side-bar [user]="selectedUser"></app-config-side-bar>
     </div>
   </div>
-  <div class="col">
+  <div class="col-md">
     <div class="container">
       <div class="row" style="padding: 2%">
         <div style="display: flex; align-items: start">

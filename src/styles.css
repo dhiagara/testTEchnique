@@ -5,3 +5,33 @@ body {
     margin: 0px!important;
     overflow-x: hidden;
 }
+.btn-outline-success {
+    color: #645CAA;
+    border-color: #645CAA;
+}
+.btn-outline-success:hover,btn-outline-success:active,btn-outline-success:focus {
+    background-color: #645CAA;
+    border-color: #645CAA;
+    color: white;
+}
+
+
+
+
+
+/* Primary buttons //// */
+.btn-primary {
+    background-color: #645CAA;
+    border-color: white;
+    color:white;
+}
+.btn-primary:hover,btn-outline-primary:active,btn-outline-primary:focus {
+    background-color: #AAC4FF;
+    border-color: white;
+    color: white;
+}
+
+
+
+
+

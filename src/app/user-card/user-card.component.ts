@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { User } from '../entity/User';
 import { ApiUsersService } from '../services/api-users.service';
@@ -11,9 +12,16 @@ import { ApiUsersService } from '../services/api-users.service';
 export class UserCardComponent implements OnInit {
   @Input() user: User;
   @Output() clickUser = new EventEmitter();
-  constructor(private userService: ApiUsersService) { }
+  userForm = this.fb.group({
+    id: [''],
+    _nom: ['', Validators.required],
+    _prenom: ['', Validators.required],
+    _nombre_enfants: ['', Validators.required],
+  });
+  constructor(private userService: ApiUsersService, private fb: FormBuilder,) { }
 
   ngOnInit(): void {
+    this.loadUser();
   }
   userSelect() {
 
@@ -22,6 +30,20 @@ export class UserCardComponent implements OnInit {
     this.userService.deleteUser(this.user.id).subscribe(res => {
       console.log("user deleted");
     })
+  }
+  onSubmit() {
+
+    const id = this.userForm.value.id;
+    this.userService.updatUser(this.userForm.value, id).subscribe(r => {
+
+    })
+
+  }
+  loadUser() {
+    console.log("user", this.user)
+    this.userForm.patchValue({
+      ...this.user
+    });
   }
 
 }

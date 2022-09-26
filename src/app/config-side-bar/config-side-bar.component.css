@@ -23,20 +23,17 @@ p {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
-.wrapper {
-  
-   
-}
+
 :disabled{
-    background-color: gray;
+    background-color: #eae6e6;
 }
 #sidebar {
-    max-width: 250px;
-    min-height: 100vh;
-    background: #7386D5;
+    min-height: 110vh;
+    background: #645CAA;
     color: #fff;
     transition: all 0.3s;
-    padding: 5%;
+    padding: 10%;
+    margin-right: 0px;
   
 }
 input{
@@ -55,12 +52,21 @@ margin-left: auto;
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+    height: auto;
+    width: 100%;
+    max-width: 150%;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: row;
+  
     }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
+
 }
+@media (max-width: 768px) {
+    .sidebar-header {
+display: none;
+  
+    }
+
+}
+

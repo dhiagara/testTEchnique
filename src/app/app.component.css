@@ -11,8 +11,10 @@
   height: 100vh;
   align-items: center;
   justify-content: center;
-  
-
+}
+.cardsMedia{
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -26,4 +28,15 @@ input{
   margin-bottom: 2%;
 }
   
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 930px) {
+ 
+  .cardsMedia{
+    display: flex;
+  }
+}
   

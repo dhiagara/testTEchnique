@@ -1,22 +1,45 @@
-<div class="card mb-3 card__hover">
+<div class="card mb-3 card__hover" (click)="clickUser.emit(user)">
   <a class="delete-icon" (click)="deleteUser()"
     ><i class="bi bi-trash delete-icon"></i>
   </a>
-  <div class="row no-gutters" (click)="clickUser.emit(user)">
+  <div class="row no-gutters">
     <div class="col-md-4">
       <img [src]="user.image" class="image" />
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">
-          {{ user._nom | titlecase }} {{ user._prenom }}
-        </h5>
-        <p class="card-text">Some user info here</p>
-        <p class="card-text">
-          <small class="text-muted"
-            >Nombre enfants : {{ user._nombre_enfants }}</small
+        <form [formGroup]="userForm" class="form-group">
+          <label for="nom">Nom: </label>
+          <input
+            class="form-control"
+            id="nom"
+            type="text"
+            formControlName="_nom"
+          />
+
+          <label for="last-name">prenom: </label>
+          <input
+            class="form-control"
+            id="prenom"
+            type="text"
+            formControlName="_prenom"
+          />
+          <label for="last-name">Nombre_enfants: </label>
+          <input
+            class="form-control"
+            id="nombre_enfants"
+            type="text"
+            formControlName="_nombre_enfants"
+          />
+
+          <button
+            class="btn btn-primary submit"
+            (click)="onSubmit()"
+            [disabled]="!userForm.valid"
           >
-        </p>
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   </div>

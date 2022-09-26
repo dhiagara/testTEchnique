@@ -44,26 +44,24 @@ export class AppComponent implements OnInit {
 
   }
   userSelect(user) {
-    this.style1 = true;
-    this.selectedUser = user;
-    if (!this.isShown)
-      this.isShown = true;
-    else {
-      this.isShown = false;
-      setTimeout(() => {
+    console.log("selected user ", this.selectedUser, "user", user)
+    if (user !== this.selectedUser) {
+      this.style1 = true;
+      this.selectedUser = user;
+      if (!this.isShown)
         this.isShown = true;
-      }, 500);
+      else {
+        this.isShown = false;
+        setTimeout(() => {
+          this.isShown = true;
+        }, 500);
 
-
+      }
     }
   }
 
   onSubmit() {
-    const id = this.listUsers.length + 1;
-    const newUser = { ...this.userForm.value, id }
-    this.userService.addUser(newUser).subscribe(r => {
-      console.log("succes ???")
-    })
+    this.SaveListUsersInJson();
 
   }
 
@@ -89,6 +87,13 @@ export class AppComponent implements OnInit {
   /*
   * @ToDo
   * */
-  SaveListUsersInJson() { }
+  SaveListUsersInJson() {
+    const length = this.listUsers.length - 1
+    const id = this.listUsers[length].id + 1;
+    const newUser = { ...this.userForm.value, id }
+    this.userService.addUser(newUser).subscribe(r => {
+      console.log("succes ???")
+    })
+  }
 
 }
