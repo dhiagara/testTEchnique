@@ -64,6 +64,11 @@ export class AppComponent implements OnInit {
     this.SaveListUsersInJson();
 
   }
+  fetchData() {
+    this.LoadListUsersFromJson();
+  }
+
+
 
   /*
   * @ToDo

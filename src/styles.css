@@ -25,10 +25,11 @@ body {
     border-color: white;
     color:white;
 }
-.btn-primary:hover,btn-outline-primary:active,btn-outline-primary:focus {
+.btn-primary:hover,btn-outline-primary:active,btn-outline-primary:focus,btn-outline-primary::after {
     background-color: #AAC4FF;
     border-color: white;
     color: white;
+    
 }
 
 
