@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "test-technique"
+    }
+  },
+  "defaultProject": "test-technique",
+  "cli": {
+    "analytics": false
+  }
 }

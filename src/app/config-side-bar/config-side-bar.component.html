@@ -1,1 +1,43 @@
-<p>config-side-bar works!</p>
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Test technique</h3>
+    </div>
+    <form
+      [formGroup]="userForm"
+      class="form-group"
+      (ngSubmit)="onSubmit($event)"
+    >
+      <label for="nom">Nom: </label>
+      <input class="form-control" id="nom" type="text" formControlName="_nom" />
+
+      <label for="last-name">prenom: </label>
+      <input
+        class="form-control"
+        id="prenom"
+        type="text"
+        formControlName="_prenom"
+      />
+      <label for="last-name">Nombre_enfants: </label>
+      <input
+        class="form-control"
+        disabled
+        id="nombre_enfants"
+        type="text"
+        formControlName="_nombre_enfants"
+      />
+
+      <button
+        class="btn btn-primary submit"
+        type="submit"
+        [disabled]="!userForm.valid"
+      >
+        Submit
+      </button>
+    </form>
+  </nav>
+  <!-- <div class="user-component">
+    <app-user-card></app-user-card>
+  </div> -->
+</div>

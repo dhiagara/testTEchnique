@@ -1,5 +1,133 @@
-<p>app works!</p>
+<div [ngClass]="style1 == true ? 'row users' : 'row users2'">
+  <div class="col-2">
+    <div *ngIf="isShown" [@enterAnimation]>
+      <app-config-side-bar [user]="selectedUser"></app-config-side-bar>
+    </div>
+  </div>
+  <div class="col">
+    <div class="container">
+      <div class="row" style="padding: 2%">
+        <div style="display: flex; align-items: start">
+          <button
+            data-toggle="modal"
+            data-target="#exampleModal"
+            class="btn btn-outline-success"
+          >
+            <i class="bi bi-person-plus"></i> add
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Ajouter user
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    [formGroup]="userForm"
+                    class="form-group"
+                    (ngSubmit)="onSubmit()"
+                  >
+                    <label for="nom">Nom: </label>
+                    <input
+                      class="form-control"
+                      id="nom"
+                      type="text"
+                      formControlName="_nom"
+                    />
 
-<app-config-side-bar></app-config-side-bar>
+                    <label for="last-name">prenom: </label>
+                    <input
+                      class="form-control"
+                      id="prenom"
+                      type="text"
+                      formControlName="_prenom"
+                    />
+                    <label for="last-name">Nombre_enfants: </label>
+                    <input
+                      class="form-control"
+                      id="nombre_enfants"
+                      type="text"
+                      formControlName="_nombre_enfants"
+                    />
 
-<app-user-card></app-user-card>
+                    <button
+                      type="submit"
+                      [disabled]="!userForm.valid"
+                      class="btn btn-primary"
+                    >
+                      Save changes
+                    </button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; margin-left: auto">
+          <button class="btn btn-outline-success">
+            <i class="bi bi-arrow-clockwise"></i> reload
+          </button>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div
+          *ngFor="
+            let user of listUsers
+              | paginate: { itemsPerPage: 4, currentPage: p }
+          "
+          class="col"
+        >
+          <div class="card mb-3 card__hover" (click)="userSelect(user)">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img [src]="user.image" class="image" />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{ user._nom | titlecase }} {{ user._prenom }}
+                  </h5>
+                  <p class="card-text">Some user info here</p>
+                  <p class="card-text">
+                    <small class="text-muted"
+                      >Nombre enfants : {{ user._nombre_enfants }}</small
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
