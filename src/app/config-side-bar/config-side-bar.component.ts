@@ -25,7 +25,7 @@ export class ConfigSideBarComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
   }
-  onSubmit($event) {
+  onSubmit() {
 
     const id = this.userForm.value.id;
     this.userService.updatUser(this.userForm.value, id).subscribe(r => {

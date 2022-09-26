@@ -3,5 +3,5 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
     margin: 0px!important;
-    overflow: hidden;
+    overflow-x: hidden;
 }

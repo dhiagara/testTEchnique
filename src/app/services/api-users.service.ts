@@ -11,9 +11,6 @@ export class ApiUsersService {
   URL = 'http://localhost:3000/users';
   constructor(private http: HttpClient) { }
   getUsers(): Observable<any> {
-
-    console.log("USERS", this.http.get<any>(`${this.URL}`));
-
     return this.http.get<any>(`${this.URL}`)
   }
   addUser(user): Observable<User> {
@@ -27,6 +24,12 @@ export class ApiUsersService {
   }
   getUserById(id): Observable<User> {
     return this.http.get<any>(`${this.URL}/${id}`)
+  }
+  deleteUser(id) {
+    return this.http.delete<any>(`${this.URL}/${id}`).pipe(
+      catchError(this.handleError)
+    )
+
   }
   // Handle API errors
   handleError(error: HttpErrorResponse) {

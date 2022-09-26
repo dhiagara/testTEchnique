@@ -1,6 +1,6 @@
 <div [ngClass]="style1 == true ? 'row users' : 'row users2'">
-  <div class="col-2">
-    <div *ngIf="isShown" [@enterAnimation]>
+  <div class="col-2" *ngIf="isShown" [@enterAnimation]>
+    <div>
       <app-config-side-bar [user]="selectedUser"></app-config-side-bar>
     </div>
   </div>
@@ -103,26 +103,8 @@
           "
           class="col"
         >
-          <div class="card mb-3 card__hover" (click)="userSelect(user)">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img [src]="user.image" class="image" />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    {{ user._nom | titlecase }} {{ user._prenom }}
-                  </h5>
-                  <p class="card-text">Some user info here</p>
-                  <p class="card-text">
-                    <small class="text-muted"
-                      >Nombre enfants : {{ user._nombre_enfants }}</small
-                    >
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-user-card [user]="user" (clickUser)="userSelect($event)">
+          </app-user-card>
         </div>
       </div>
       <div class="row">

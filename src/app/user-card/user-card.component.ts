@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { User } from '../entity/User';
+import { ApiUsersService } from '../services/api-users.service';
 
 @Component({
   selector: 'app-user-card',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-
-  constructor() { }
+  @Input() user: User;
+  @Output() clickUser = new EventEmitter();
+  constructor(private userService: ApiUsersService) { }
 
   ngOnInit(): void {
+  }
+  userSelect() {
+
+  }
+  deleteUser() {
+    this.userService.deleteUser(this.user.id).subscribe(res => {
+      console.log("user deleted");
+    })
   }
 
 }

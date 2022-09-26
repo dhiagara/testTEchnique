@@ -1,8 +1,8 @@
 export class User {
-  private id;
-  private _nom;
-  private _prenom;
-  private _nombre_enfants;
+  id;
+  _nom;
+  _prenom;
+  _nombre_enfants;
   public image?;
 
   get nom() {

@@ -4,11 +4,7 @@
     <div class="sidebar-header">
       <h3>Test technique</h3>
     </div>
-    <form
-      [formGroup]="userForm"
-      class="form-group"
-      (ngSubmit)="onSubmit($event)"
-    >
+    <form [formGroup]="userForm" class="form-group">
       <label for="nom">Nom: </label>
       <input class="form-control" id="nom" type="text" formControlName="_nom" />
 
@@ -22,7 +18,7 @@
       <label for="last-name">Nombre_enfants: </label>
       <input
         class="form-control"
-        disabled
+        [attr.disabled]="true"
         id="nombre_enfants"
         type="text"
         formControlName="_nombre_enfants"
@@ -30,7 +26,7 @@
 
       <button
         class="btn btn-primary submit"
-        type="submit"
+        (click)="onSubmit()"
         [disabled]="!userForm.valid"
       >
         Submit
